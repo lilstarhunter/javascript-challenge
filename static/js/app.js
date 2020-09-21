@@ -1,4 +1,15 @@
 // from data.js
-var tableData = data;
+var sights = data;
 
-// YOUR CODE HERE!
+//Access the table using d3
+var dataTable = d3.select("tbody");
+
+//console.log(sights);
+
+sights.forEach(function (ufoSighting) {
+  var row = dataTable.append("tr");
+  Object.entries(ufoSighting).forEach(function ([key, value]) {
+    var cell = row.append("td");
+    cell.text(value);
+  });
+});
