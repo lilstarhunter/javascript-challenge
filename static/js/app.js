@@ -5,9 +5,8 @@ var inputForm = d3.select(".form-control");
 var filterButton = d3.select("#filter-btn");
 
 //======== Populate Data into HTML ========//
-//Method 1
+//Method 1: Bootcamp methodology
 // function sightTable(sights, dataTable) {
-//   //Clear HTML datatable
 //   dataTable.html();
 //   sights.forEach(function (allData) {
 //   var row = dataTable.append("tr");
@@ -32,12 +31,10 @@ function sightsTable(sights, dataTable) {
     })
     .enter()
     .append("td")
-
     .text(function (d) {
       return d;
     });
 }
-
 sightsTable(sights, dataTable);
 
 //======== Create event handlers for user defined date filter ========//
@@ -51,7 +48,6 @@ filterButton.on("click", function () {
   runFilter(sights, dataTable);
 });
 
-// filterData = []
 //======== Create a runFilter function ========//
 function runFilter(sights, dataTable) {
   // Prevents page from reloading after every search
@@ -65,11 +61,9 @@ function runFilter(sights, dataTable) {
   var inputValue = inputElement.property("value").trim();
 
   var filterData = sights.filter((sight) => sight.datetime === inputValue);
-  console.log(sights);
-  console.log(filterData);
-  sightsTable(filterData, dataTable);
-}
 
-//Notes from tutoring
-//d3 good at databinding
-//constantly be inspecting the elements!!!
+  //Run sightsTable function with new data
+  sightsTable(filterData, dataTable);
+  // console.log(sights);
+  // console.log(filterData);
+}
