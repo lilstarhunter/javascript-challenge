@@ -1,4 +1,4 @@
-# JavaScript Challenge
+# UFO Sightings
 <img src="/UFO_level1/static/images/nasa.jpg" height = 400px width = 1000px>
 
 ## **Background**
