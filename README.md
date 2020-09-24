@@ -1,4 +1,5 @@
-# javascript-challenge
+# JavaScript Challenge
+<img src="/UFO_level1/static/images/nasa.jpg">
 
 ## **Background**
 
