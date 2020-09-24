@@ -1,45 +1,75 @@
-// from data.js
+//========Create all global variables========//
 var sights = data;
-
-//Access the table using d3
 var dataTable = d3.select("tbody");
-
-//console.log(sights);
-
-//Add entries from data to html table
-sights.forEach(function (ufoSighting) {
-  var row = dataTable.append("tr");
-  Object.entries(ufoSighting).forEach(function ([key, value]) {
-    var cell = row.append("td");
-    cell.text(value);
-  });
-});
-
-//Access the form for filtering the results of the table
-//Create a variable that references the input form
 var inputForm = d3.select(".form-control");
-
-//Create a variable for the Filter table button
 var filterButton = d3.select("#filter-btn");
 
-//Create event handlers for hitting enter on form and clicking the button to run function
-inputForm.on("submit", runFilter);
-filterButton.on("click", runFilter);
+//======== Populate Data into HTML ========//
+//Method 1
+// function sightTable(sights, dataTable) {
+//   //Clear HTML datatable
+//   dataTable.html();
+//   sights.forEach(function (allData) {
+//   var row = dataTable.append("tr");
+//     Object.entries(allData).forEach(function ([key, value]) {
+//       var cell = row.append("td");
+//       cell.text(value);
+//     });
+//   });
+// }
+// sightTable(sights, dataTable);
 
-//Create a runFilter function
-function runFilter() {
+//Method 2: Harnessing d3 to create table
+function sightsTable(sights, dataTable) {
+  dataTable
+    .selectAll("tr")
+    .data(sights)
+    .enter()
+    .append("tr")
+    .selectAll("td")
+    .data(function (d) {
+      return Object.values(d);
+    })
+    .enter()
+    .append("td")
+
+    .text(function (d) {
+      return d;
+    });
+}
+
+sightsTable(sights, dataTable);
+
+//======== Create event handlers for user defined date filter ========//
+inputForm.on("keypress", function () {
+  if (d3.event.keyCode === 13) {
+    runFilter(sights, dataTable);
+  }
+});
+
+filterButton.on("click", function () {
+  runFilter(sights, dataTable);
+});
+
+// filterData = []
+//======== Create a runFilter function ========//
+function runFilter(sights, dataTable) {
+  // Prevents page from reloading after every search
   d3.event.preventDefault();
 
-  //Create variable for input element and input value
-  var inputElement = d3.select(".form-control");
-  var inputValue = inputElement.property("value");
+  //Clear the dataTable
+  dataTable.selectAll("tr").remove().exit();
 
-  var filterDate = sights.filter((i) => i.datetime === inputValue);
-  filterDate.forEach(function (ufoSighting) {
-    var row = dataTable.append("tr");
-    Object.entries(ufoSighting).forEach(function ([key, value]) {
-      var cell = row.append("td");
-      cell.text(value);
-    });
-  });
+  //Create local variables
+  var inputElement = d3.select(".form-control");
+  var inputValue = inputElement.property("value").trim();
+
+  var filterData = sights.filter((sight) => sight.datetime === inputValue);
+  console.log(sights);
+  console.log(filterData);
+  sightsTable(filterData, dataTable);
 }
+
+//Notes from tutoring
+//d3 good at databinding
+//constantly be inspecting the elements!!!
