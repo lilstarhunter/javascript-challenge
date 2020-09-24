@@ -56,11 +56,19 @@ function runFilter(sights, dataTable) {
   //Clear the dataTable
   dataTable.selectAll("tr").remove().exit();
 
-  //Create local variables
-  var inputElement = d3.select(".form-control");
-  var inputValue = inputElement.property("value").trim();
+  //Create local variables for each box
+  var inputElement = d3.selectAll("#form-control");
+  var inputValue = inputElement.property("value");
 
-  var filterData = sights.filter((sight) => sight.datetime === inputValue);
+  var filterData = sights.filter(
+    (sight) =>
+      sight.datetime === inputValue ||
+      sight.city === inputValue ||
+      sight.state === inputValue ||
+      sight.country === inputValue ||
+      sight.shape === inputValue
+  );
+  console.log(filterData);
 
   //Run sightsTable function with new data
   sightsTable(filterData, dataTable);
