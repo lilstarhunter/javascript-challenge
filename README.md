@@ -1,5 +1,5 @@
 # JavaScript Challenge
-<img src="/UFO_level1/static/images/nasa.jpg" height = 200px >
+<img src="/UFO_level1/static/images/nasa.jpg" height = 200px width = 1000px>
 
 ## **Background**
 
